@@ -1,0 +1,41 @@
+# Build artifacts
+/bin/
+/build/
+/.cache/
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.json
+
+# IDE
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Compiled
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+
+# Config files (optional)
+*.conf
+!example.conf
