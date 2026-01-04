@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(cpp_json
-    VERSION 2.0.0
+    VERSION 1.1.0
     DESCRIPTION "Modern C++23 JSON parser with safe APIs"
     LANGUAGES CXX
 )
@@ -20,6 +20,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         -fno-exceptions
         -fno-rtti
         -Wno-c++98-compat
+		-Wno-unsafe-buffer-usage-in-libc-call
     )
 elseif(MSVC)
     add_compile_options(
@@ -32,10 +33,10 @@ endif()
 
 # Build the library
 add_library(${PROJECT_NAME}
-    src/json/tokenizer.cpp
-    src/json/parser.cpp
-    src/json/writer.cpp
-    src/json/api.cpp
+    src/tokenizer.cpp
+    src/parser.cpp
+    src/writer.cpp
+    src/api.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
