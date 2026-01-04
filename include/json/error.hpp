@@ -44,11 +44,11 @@ constexpr std::string_view error_message(ErrorCode code) {
         case ErrorCode::ExpectedValue: return "Expected value";
         case ErrorCode::TooDeep: return "Nesting too deep";
         case ErrorCode::OutOfMemory: return "Out of memory";
+        default: return "Unknown error";
     }
-    return "Unknown error";
 }
 
 template<typename T>
 using Result = std::expected<T, Error>;
 
-} // namespace jsona
+} // namespace json

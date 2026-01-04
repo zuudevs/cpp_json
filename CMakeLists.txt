@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(cpp_json
-    VERSION 1.0.0
-    DESCRIPTION "json i/o based on cpp"
+    VERSION 2.0.0
+    DESCRIPTION "Modern C++23 JSON parser with safe APIs"
     LANGUAGES CXX
 )
 
@@ -19,7 +19,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         -Wextra
         -fno-exceptions
         -fno-rtti
-        -Wno-c++98-compat  # Suppress C++98 warnings
+        -Wno-c++98-compat
     )
 elseif(MSVC)
     add_compile_options(
@@ -46,6 +46,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 add_executable(json-example tests/basic.cpp)
 target_link_libraries(json-example ${PROJECT_NAME})
 
+# Build comprehensive examples
+add_executable(json-examples examples/example.cpp)
+target_link_libraries(json-examples ${PROJECT_NAME})
+
 # Build json-reader tool
 add_executable(json-reader tools/json-reader.cpp)
 target_link_libraries(json-reader ${PROJECT_NAME})
@@ -57,3 +61,4 @@ target_link_libraries(json-writer ${PROJECT_NAME})
 # Testing
 enable_testing()
 add_test(NAME BasicTest COMMAND json-example)
+add_test(NAME ExamplesTest COMMAND json-examples)

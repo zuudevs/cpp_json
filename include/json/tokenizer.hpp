@@ -7,6 +7,8 @@
 
 namespace json {
 
+class Arena; // Forward declaration
+
 enum class TokenType : uint8_t {
     End,
     LeftBrace,      // {
@@ -30,8 +32,13 @@ struct Token {
 
 class Tokenizer {
 public:
+    // Constructor without arena (no string unescaping)
     explicit Tokenizer(std::span<const char> input)
-        : input_(input), pos_(0) {}
+        : input_(input), pos_(0), arena_(nullptr) {}
+    
+    // Constructor with arena (enables string unescaping)
+    Tokenizer(std::span<const char> input, Arena& arena)
+        : input_(input), pos_(0), arena_(&arena) {}
 
     Result<Token> next();
     
@@ -46,6 +53,7 @@ private:
 
     std::span<const char> input_;
     size_t pos_;
+    Arena* arena_; // Optional: if null, strings won't be unescaped
 };
 
 } // namespace json

@@ -84,6 +84,7 @@ Result<Node*> Parser::parse_value() {
         }
             
         case TokenType::String: {
+            // String content has already been unescaped by tokenizer
             // Extract string content (remove quotes)
             std::string_view text = token->text;
             if (text.size() >= 2) {
@@ -188,7 +189,8 @@ Result<Node*> Parser::parse_object() {
         auto key = expect(TokenType::String);
         if (!key) return std::unexpected(key.error());
 
-        // Extract string content
+        // String content has already been unescaped by tokenizer
+        // Extract string content (remove quotes)
         std::string_view key_text = key->text;
         if (key_text.size() >= 2) {
             key_text = key_text.substr(1, key_text.size() - 2);
