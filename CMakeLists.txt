@@ -19,26 +19,41 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         -Wextra
         -fno-exceptions
         -fno-rtti
+        -Wno-c++98-compat  # Suppress C++98 warnings
     )
 elseif(MSVC)
     add_compile_options(
         /O2
         /W4
         /GR-  # Disable RTTI
+        /wd4996  # Disable deprecated warnings
     )
 endif()
 
+# Build the library
 add_library(${PROJECT_NAME}
-	src/json/tokenizer.cpp
-	src/json/parser.cpp
-	src/json/writer.cpp
+    src/json/tokenizer.cpp
+    src/json/parser.cpp
+    src/json/writer.cpp
+    src/json/api.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${PROJECT_NAME} PUBLIC
     "${CMAKE_SOURCE_DIR}/include"
 )
 
+# Build the test executable
 add_executable(json-example tests/basic.cpp)
+target_link_libraries(json-example ${PROJECT_NAME})
+
+# Build json-reader tool
+add_executable(json-reader tools/json-reader.cpp)
+target_link_libraries(json-reader ${PROJECT_NAME})
+
+# Build json-writer tool
+add_executable(json-writer tools/json-writer.cpp)
+target_link_libraries(json-writer ${PROJECT_NAME})
 
 # Testing
 enable_testing()
+add_test(NAME BasicTest COMMAND json-example)
